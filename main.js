@@ -3,8 +3,12 @@ const program = require("commander");
 const list = require("./list");
 const path = require("path");
 
-program.parse(process.argv);
+program
+  .option("-p, --peppers", "Add peppers")
+  .option("-s, --silent", "Echo only file names with GPS")
+  .parse(process.argv);
 const targetDir = program.args[0];
+const options = program.opts();
 
 if (!targetDir) {
   console.error(
@@ -13,4 +17,4 @@ if (!targetDir) {
   return;
 }
 
-list(targetDir);
+list(targetDir, options.silent);

@@ -31,10 +31,10 @@ function getAllFiles(fromPath: string, fileList: string[] = []): string[] {
   return fileList;
 }
 
-async function list(fromPath: string) {
+async function list(fromPath: string, silent?: true) {
   const allFiles = getAllFiles(fromPath);
   const size = allFiles.length;
-  console.log(`Scanning ${size} files...`);
+  if (!silent) console.log(`Scanning ${size} files...`);
 
   for (let i = 0; i < size; i++) {
     const filePath = allFiles[i];
@@ -42,13 +42,16 @@ async function list(fromPath: string) {
 
     const hasGps = await hasGpsData(filePath);
     if (hasGps === null) {
-      console.log(`Failed to parse: ${logName}`);
+      if (!silent) console.log(`Failed to parse: ${logName}`);
     } else if (hasGps) {
       console.log(logName);
     }
+    if (!silent && i % 500 === 0 && i !== 0) {
+      console.log(`${i} files have been scanned...`);
+    }
   }
 
-  console.log(`Done!`);
+  if (!silent) console.log(`Done!`);
 }
 
 module.exports = list;

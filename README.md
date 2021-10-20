@@ -38,3 +38,9 @@ Failed to parse: dir/baz.md # Failed since this file is not a image.
 ...
 Done!
 ```
+
+If you want output to echo only filenames that have GPS, set `--silent` option.
+```bash
+$ npm run list -- [target-dir-here] --silent
+# e.g. rpm run list --. --silent
+```
